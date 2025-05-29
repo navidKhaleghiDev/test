@@ -1,67 +1,57 @@
 module.exports = {
+  root: true,
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2021,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
+    project: './tsconfig.json',
   },
-  env: {
-    browser: true,
-    es2021: true,
-    node: true,
-  },
-  root: true,
-  extends: [
-    'next',
-    'eslint:recommended',
+  plugins: [
+    '@typescript-eslint',
+    'react',
+    'react-hooks',
+    'import',
+    'jsx-a11y',
     'prettier',
-    'next/core-web-vitals',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:prettier/recommended',
-    'plugin:react-hooks/recommended',
+    'tailwindcss',
+    'simple-import-sort',
   ],
-  plugins: ['prettier', '@typescript-eslint', 'react', 'react-hooks'],
+  extends: [
+    'airbnb',
+    'airbnb-typescript',
+    'airbnb/hooks',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:tailwindcss/recommended',
+    'plugin:prettier/recommended',
+  ],
   rules: {
-    // JavaScript rules
-    'prefer-const': 'warn',
-    'no-var': 'warn',
-    'no-unused-vars': 'warn',
-    'object-shorthand': 'warn',
-    'quote-props': ['warn', 'as-needed'],
-    // TypeScript rules
-    '@typescript-eslint/array-type': [
-      'warn',
+    // formatting
+    'prettier/prettier': ['error'],
+    // imports
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/order': 'off',
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    // react
+    'react/react-in-jsx-scope': 'off', // Next.js doesn't need React import
+    'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
+    'react/function-component-definition': [
+      2,
       {
-        default: 'array',
+        namedComponents: 'arrow-function',
       },
     ],
-    '@typescript-eslint/consistent-type-assertions': [
-      'warn',
-      {
-        assertionStyle: 'as',
-        objectLiteralTypeAssertions: 'never',
-      },
-    ],
-    // React rules
-    'react/jsx-fragments': ['warn', 'syntax'], // Shorthand syntax for React fragments
-    'react/jsx-filename-extension': [
-      'warn',
-      {
-        extensions: ['ts', 'tsx'],
-      },
-    ],
-    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off',
-    'prettier/prettier': 'warn',
+    // a11y
+    'jsx-a11y/anchor-is-valid': 'off', // handled by Next.js <Link>
+    // ts
+    '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/explicit-function-return-type': 'off',
   },
   settings: {
     react: {
       version: 'detect',
     },
   },
-};
+}

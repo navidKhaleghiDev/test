@@ -1,5 +1,7 @@
 .next
 .cache
+.husky
+.vscode
 package-lock.json
 public
 node_modules
