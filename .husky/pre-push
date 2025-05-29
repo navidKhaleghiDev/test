@@ -1,16 +1,41 @@
 #!/bin/sh
 
-echo "\033[1;36m🚀 Running Pre-push Checks...\033[0m"
+# Git passes the remote name (like origin) as the first argument
+REMOTE_NAME="$1"
+TARGET_BRANCH="develop"
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-echo "\033[1;34m📦 Checking build...\033[0m"
+# Block pushing directly to develop
+if [ "$CURRENT_BRANCH" == "$TARGET_BRANCH" ]\
+  echo "🚫 Pushing directly to '$TARGET_BRANCH' is not allowed!"
+  exit 1
+fi
+
+# Fetch latest changes from the target branch on the actual remote being pushed
+echo "🔄 Fetching latest '$TARGET_BRANCH' from '$REMOTE_NAME'..."
+git pull "$REMOTE_NAME" "$TARGET_BRANCH"
+
+
+# Check if merge failed
+if [ $? -ne 0 ]; then
+  echo "❌ Merge failed. Resolve conflicts before pushing."
+  exit 1
+fi
+
+echo "✅ pull successful. Proceeding with push..."
+
+
+echo "🚀 Running Pre-push Checks..."
+
+echo "📦 Checking build..."
 
 
 npm run build --if-present
 BUILD_EXIT_CODE=$?
 
 if [ $BUILD_EXIT_CODE -ne 0 ]
-  echo "\033[1;31m❌ Build failed! Push aborted.\033[0m"
+  echo "❌ Build failed! Push aborted."
   exit 1
 fi
 
-echo "\033[1;32m✅ Pre-push checks passed. Proceeding with push...\033[0m"
+echo "✅ Pre-push checks passed. Proceeding with push..."
