@@ -1,5 +1,4 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+
 
 echo "\033[1;36m📝 Checking commit message with the conventions of the @commitlint/config-conventional ...\033[0m"
 

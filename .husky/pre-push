@@ -1,5 +1,4 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
 
 echo "\033[1;36m🚀 Running Pre-push Checks...\033[0m"
 
