@@ -1,1 +1,15 @@
-npx  commitlint --edit "$1"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "\033[1;36m📝 Checking commit message with the conventions of the @commitlint/config-conventional ...\033[0m"
+
+npx commitlint --edit "$1"
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo "\033[1;31m❌ Commit message is invalid! Use format: <type>(scope): message\033[0m"
+  echo "\033[1;33m🔗 Example: feat(auth): add login feature\033[0m"
+  exit 1
+else
+  echo "\033[1;32m✅ excellent , Commit message is valid!\033[0m"
+fi

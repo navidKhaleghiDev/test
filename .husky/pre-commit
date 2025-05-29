@@ -1,1 +1,11 @@
-lint-staged
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "\033[1;36m🔍 Running Pre-commit Checks, i hope u can pass this step...\033[0m"
+
+npx lint-staged || {
+  echo "\033[1;31m❌ I am sorry you have issues here . Linting failed. Please fix the errors before committing.\033[0m"
+  exit 1
+}
+
+echo "\033[1;32m✅ All lint checks passed!\033[0m"

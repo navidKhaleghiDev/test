@@ -1,4 +1,17 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "\033[1;36m🚀 Running Pre-push Checks...\033[0m"
+
+echo "\033[1;34m📦 Checking build...\033[0m"
 
 
-npm run build 
+npm run build --if-present
+BUILD_EXIT_CODE=$?
 
+if [ $BUILD_EXIT_CODE -ne 0 ]
+  echo "\033[1;31m❌ Build failed! Push aborted.\033[0m"
+  exit 1
+fi
+
+echo "\033[1;32m✅ Pre-push checks passed. Proceeding with push...\033[0m"
