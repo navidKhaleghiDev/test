@@ -4,5 +4,8 @@
     "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript", "typescript", "typescriptreact"],
-  "prettier.enable": true
+  "prettier.enable": true,
+  "cSpell.words": [
+    "turbopack"
+  ]
 }
